@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace ShopAPI2.Models.ViewModels
+namespace ShopAPI2.Models.Help
 {
     public class JwtTokenOptions
     {

@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using ShopAPI2.Models.DataBaseModels;
-using ShopAPI2.Models.ViewModels;
+using ShopAPI2.Models.Help;
 
 namespace ShopAPI2.Services
 {

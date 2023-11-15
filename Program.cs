@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using ShopAPI2.Models.ViewModels;
 using ShopAPI2.Models.DataBaseModels;
+using ShopAPI2.Models.Help;
+using ShopAPI2.Models.DTO;
+using ShopAPI2.Services.DTOServices.Help;
+using ShopAPI2.Services.DTOServices;
 
 namespace ShopAPI2
 {
@@ -53,6 +56,10 @@ namespace ShopAPI2
             builder.Services.AddDbContext<DataBaseWorker>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("DBContection")));
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddScoped<IDTOServices<UserDTO>, UserDTOService>();
+            builder.Services.AddScoped<IDTOServices<RoleDTO>, RoleDTOService>();
 
             var app = builder.Build();
 

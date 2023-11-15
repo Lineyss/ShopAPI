@@ -1,15 +1,20 @@
 ﻿using ShopAPI2.Models.DataBaseModels;
 using ShopAPI2.Services;
 
-namespace ShopAPI2.Models.ViewModels
+namespace ShopAPI2.Models.DTO
 {
-    public class UserViewModel
+    public class UserDTO
     {
-        public UserViewModel(User user)
+        public UserDTO()
+        {
+
+        }
+
+        public UserDTO(User user)
         {
             ID = user.ID;
             Login = user.Login;
-            HashPassword = user.Password;
+            Password = user.Password;
             SecondName = user.SecondName;
             FirstName = user.FirstName;
             MidleName = user.MidleName;
@@ -19,20 +24,7 @@ namespace ShopAPI2.Models.ViewModels
         }
         public int ID { get; private set; }
         public string Login { get; set; }
-
-        private string HashPassword;
-        public string Password
-        {
-            get
-            {
-                return HashPassword;
-            }
-            set
-            {
-                HashPassword = PasswordHash.hashPassword(value);
-            }
-        }
-
+        public string Password { get; set; }
         public string SecondName { get; set; }
         public string FirstName { get; set; }
         public string MidleName { get; set; }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShopAPI2.Controllers.Help;
 using ShopAPI2.Models.DTO;
 using ShopAPI2.Services.DTOServices.Help;
@@ -7,55 +6,57 @@ using ShopAPI2.Services.DTOServices.Help;
 namespace ShopAPI2.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class RoleController : ControllerBase, IController<RoleDTO>
+    [Route("api/User")]
+    public class UserController : ControllerBase, IController<UserDTO>
     {
-        private readonly IDTOServices<RoleDTO> iRole;
-        public RoleController(IDTOServices<RoleDTO> iRole)
+        private readonly IDTOServices<UserDTO> iUser;
+        public UserController(IDTOServices<UserDTO> iUser)
         {
-            this.iRole = iRole;
+            this.iUser = iUser;
         }
 
         /// <summary>
-        /// Получить данные о всех ролях
+        /// Получить данные о всех пользователях
         /// </summary>
-        /// <response code="200">Возвращает массив ролей</response>
+        /// <response code="200">Возвращает массив пользователей</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<RoleDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
         {
             try
             {
-                return Ok(await iRole.GetAll());
+                return Ok(await iUser.GetAll());
             }
-            catch
+            catch(Exception e)
             {
                 return StatusCode(500);
             }
         }
 
         /// <summary>
-        /// Получить роль по ID
+        /// Получить пользователя по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <response code="200">Возвращает элемент по ID</response>
+        /// <response code="200">Пользователь передан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpGet("{ID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<RoleDTO>> GetID(int ID)
+        public async Task<ActionResult<UserDTO>> GetID(int ID)
         {
             try
             {
-                RoleDTO? role = await iRole.GetBy(ID);
-                if (role == null)
+                UserDTO? user = await iUser.GetBy(ID);
+
+                if (user == null)
                     return BadRequest();
 
-                return Ok(role);
+
+                return Ok(user);
             }
             catch
             {
@@ -64,25 +65,26 @@ namespace ShopAPI2.Controllers
         }
 
         /// <summary>
-        /// Получить роль по названию
-        /// </summaryTitle
-        /// <param name="Title"></param>
-        /// <response code="200">Возвращает элемент по ID</response>
+        /// Получить пользователя по Логину
+        /// </summary>
+        /// <param name="login"></param>
+        /// <response code="200">Пользователь передан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
-        [HttpGet("{Title}")]
+        [HttpGet("{login}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<RoleDTO>> GetID(string Title)
+        public async Task<ActionResult<UserDTO>> GetLogin(string login)
         {
             try
             {
-                RoleDTO? role = await iRole.GetBy(Title);
-                if (role == null)
+                UserDTO? user = await iUser.GetBy(login);
+
+                if (user == null)
                     return BadRequest();
 
-                return Ok(role);
+                return Ok(user);
             }
             catch
             {
@@ -91,41 +93,38 @@ namespace ShopAPI2.Controllers
         }
 
         /// <summary>
-        /// Создать новую роли
+        /// Создать нового пользователя
         /// </summary>
         /// <param name="element"></param>
-        /// <response code="200">Новая роль создана</response>
+        /// <response code="200">Пользователь создан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<RoleDTO>> Create([FromBody] RoleDTO element)
+        public async Task<ActionResult<UserDTO>> Create([FromBody] UserDTO element)
         {
             try
             {
-                if (element == null)
+                UserDTO? user = await iUser.Create(element);
+
+                if (user == null)
                     return BadRequest();
 
-                RoleDTO? role = await iRole.Create(element);
-
-                if (role == null)
-                    return BadRequest();
-
-                return Ok(role);
+                return Ok(user);
             }
-            catch
+            catch(Exception e)
             {
                 return StatusCode(500);
             }
         }
 
         /// <summary>
-        /// Удалить роли по ID
+        /// Удалить пользователя по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <response code="200">Элемент удален из базы данных</response>
+        /// <response code="200">Пользователь удален</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpDelete("{ID}")]
@@ -136,12 +135,12 @@ namespace ShopAPI2.Controllers
         {
             try
             {
-                bool valid = await iRole.Delete(ID);
+                bool user = await iUser.Delete(ID);
 
-                if(valid)
-                    return Ok();
+                if (user == false)
+                    return BadRequest();
 
-                return BadRequest();
+                return Ok(user);
             }
             catch
             {
@@ -150,27 +149,27 @@ namespace ShopAPI2.Controllers
         }
 
         /// <summary>
-        /// Обновить существующую роль по ID
+        /// Обновить существующего пользователя по ID
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="element"></param>
-        /// <response code="200">Элемент удален из базы данных</response>
+        /// <response code="200">Пользователь обновлен</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPut("{ID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<RoleDTO>> Update(int ID, [FromBody] RoleDTO element)
+        public async Task<ActionResult<UserDTO>> Update(int ID, [FromBody] UserDTO element)
         {
             try
             {
-                RoleDTO? role = await iRole.Update(ID, element);
+                UserDTO? user = await iUser.Update(ID, element);
 
-                if (role == null)
+                if (user == null)
                     return BadRequest();
 
-                return Ok(role);
+                return Ok(user);
             }
             catch
             {

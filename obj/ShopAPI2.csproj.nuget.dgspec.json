@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\project\\Шарпы\\ShopAPI2\\ShopAPI2.csproj": {}
+    "D:\\Project\\c шарп\\ShopAPI2\\ShopAPI2.csproj": {}
   },
   "projects": {
-    "D:\\project\\Шарпы\\ShopAPI2\\ShopAPI2.csproj": {
+    "D:\\Project\\c шарп\\ShopAPI2\\ShopAPI2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\Шарпы\\ShopAPI2\\ShopAPI2.csproj",
+        "projectUniqueName": "D:\\Project\\c шарп\\ShopAPI2\\ShopAPI2.csproj",
         "projectName": "ShopAPI2",
-        "projectPath": "D:\\project\\Шарпы\\ShopAPI2\\ShopAPI2.csproj",
-        "packagesPath": "C:\\Users\\sasch\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\Шарпы\\ShopAPI2\\obj\\",
+        "projectPath": "D:\\Project\\c шарп\\ShopAPI2\\ShopAPI2.csproj",
+        "packagesPath": "C:\\Users\\Павел\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\c шарп\\ShopAPI2\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\System\\VisualStudioSDK\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\sasch\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Павел\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,8 +79,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -96,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -15,11 +15,13 @@
             <summary>
             Получить роль по ID
             </summary>
+            <param name="ID"></param>
             <response code="200">Возвращает элемент по ID</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.RoleController.Create(ShopAPI2.Models.DTO.RoleViewModel)">
+        <!-- Badly formed XML comment ignored for member "M:ShopAPI2.Controllers.RoleController.GetID(System.String)" -->
+        <member name="M:ShopAPI2.Controllers.RoleController.Create(ShopAPI2.Models.DTO.RoleDTO)">
             <summary>
             Создать новую роли
             </summary>
@@ -37,13 +39,66 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.RoleController.Update(System.Int32,ShopAPI2.Models.DTO.RoleViewModel)">
+        <member name="M:ShopAPI2.Controllers.RoleController.Update(System.Int32,ShopAPI2.Models.DTO.RoleDTO)">
             <summary>
             Обновить существующую роль по ID
             </summary>
             <param name="ID"></param>
             <param name="element"></param>
             <response code="200">Элемент удален из базы данных</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.Get">
+            <summary>
+            Получить данные о всех пользователях
+            </summary>
+            <response code="200">Возвращает массив пользователей</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.GetID(System.Int32)">
+            <summary>
+            Получить пользователя по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Пользователь передан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.GetLogin(System.String)">
+            <summary>
+            Получить пользователя по Логину
+            </summary>
+            <param name="login"></param>
+            <response code="200">Пользователь передан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.Create(ShopAPI2.Models.DTO.UserDTO)">
+            <summary>
+            Создать нового пользователя
+            </summary>
+            <param name="element"></param>
+            <response code="200">Пользователь создан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            Удалить пользователя по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Пользователь удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.Update(System.Int32,ShopAPI2.Models.DTO.UserDTO)">
+            <summary>
+            Обновить существующего пользователя по ID
+            </summary>
+            <param name="ID"></param>
+            <param name="element"></param>
+            <response code="200">Пользователь обновлен</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
