@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShopAPI2</name>
+    </assembly>
+    <members>
+        <member name="M:ShopAPI2.Controllers.RoleController.Get">
+            <summary>
+            Получить данные о всех ролях
+            </summary>
+            <response code="200">Возвращает массив ролей</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.RoleController.GetID(System.Int32)">
+            <summary>
+            Получить роль по ID
+            </summary>
+            <response code="200">Возвращает элемент по ID</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.RoleController.Create(ShopAPI2.Models.DTO.RoleViewModel)">
+            <summary>
+            Создать новую роли
+            </summary>
+            <param name="element"></param>
+            <response code="200">Новая роль создана</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.RoleController.Delete(System.Int32)">
+            <summary>
+            Удалить роли по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Элемент удален из базы данных</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.RoleController.Update(System.Int32,ShopAPI2.Models.DTO.RoleViewModel)">
+            <summary>
+            Обновить существующую роль по ID
+            </summary>
+            <param name="ID"></param>
+            <param name="element"></param>
+            <response code="200">Элемент удален из базы данных</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="T:ShopAPI2.Migrations.first">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.first.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.first.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.first.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
