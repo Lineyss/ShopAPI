@@ -24,7 +24,7 @@ namespace ShopAPI2.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.Title)
+                new Claim(ClaimTypes.Role, user.RoleID.ToString())
             };
 
             var jwt = new JwtSecurityToken(

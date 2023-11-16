@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopAPI2.Models.DTO
 {
-    public class RoleDTO
+    public class CategoryDTO
     {
-        public RoleDTO()
+        public CategoryDTO()
         {
 
         }
 
-        public RoleDTO(Role role)
+        public CategoryDTO(Category category)
         {
-            ID = role.ID;
-            Title = role.Title;
+            ID = category.ID;
+            Title = category.Title;
         }
 
         public int ID { get; private set; }

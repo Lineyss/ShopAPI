@@ -1,18 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopAPI2.Controllers.Help;
 using ShopAPI2.Models.DTO;
+using ShopAPI2.Services.DTOServices;
 using ShopAPI2.Services.DTOServices.Help;
 
 namespace ShopAPI2.Controllers
 {
     [ApiController]
     [Route("api/User")]
-    public class UserController : ControllerBase, IController<UserDTO>
+    public class UserController : AController<UserDTO>
     {
-        private readonly IDTOServices<UserDTO> iUser;
-        public UserController(IDTOServices<UserDTO> iUser)
+        private readonly CartDTOServices sCart;
+        public UserController(IDTOServices<UserDTO> iUser, CartDTOServices sCart) : base(iUser)
         {
-            this.iUser = iUser;
+            this.sCart = sCart;
         }
 
         /// <summary>
@@ -23,16 +24,9 @@ namespace ShopAPI2.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
+        public async override Task<ActionResult<IEnumerable<UserDTO>>> Get()
         {
-            try
-            {
-                return Ok(await iUser.GetAll());
-            }
-            catch(Exception e)
-            {
-                return StatusCode(500);
-            }
+            return await base.Get();
         }
 
         /// <summary>
@@ -42,21 +36,53 @@ namespace ShopAPI2.Controllers
         /// <response code="200">Пользователь передан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
-        [HttpGet("{ID}")]
+        [HttpGet("{ID:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserDTO>> GetID(int ID)
+        public async override Task<ActionResult<UserDTO>> GetID(int ID)
+        {
+            return await base.GetID(ID);
+        }
+
+        /// <summary>
+        /// Получить пользователя по логину
+        /// </summary>
+        /// <param name="login"></param>
+        /// <response code="200">Пользователь передан</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpGet]
+        [Route("{Login}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async override Task<ActionResult<UserDTO>> GetRequereParam(string login)
+        {
+            return await base.GetRequereParam(login);
+        }
+
+        /// <summary>
+        /// Получить карзину пользователя по ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <response code="200">Пользователь создан</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpGet]
+        [Route("{ID:int}/Cart")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> GetCart(int ID)
         {
             try
             {
-                UserDTO? user = await iUser.GetBy(ID);
-
-                if (user == null)
+                CartDTO? cart = await sCart.GetByUserID(ID);
+                if (cart == null)
                     return BadRequest();
 
-
-                return Ok(user);
+                return cart;
             }
             catch
             {
@@ -65,26 +91,26 @@ namespace ShopAPI2.Controllers
         }
 
         /// <summary>
-        /// Получить пользователя по Логину
+        /// Получить карзину пользователя по логину
         /// </summary>
-        /// <param name="login"></param>
-        /// <response code="200">Пользователь передан</response>
+        /// <param name="Login"></param>
+        /// <response code="200">Пользователь создан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
-        [HttpGet("{login}")]
+        [HttpGet]
+        [Route("{Login}/Cart")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserDTO>> GetLogin(string login)
+        public async Task<ActionResult<CartDTO>> GetCart(string Login)
         {
             try
             {
-                UserDTO? user = await iUser.GetBy(login);
-
-                if (user == null)
+                CartDTO? cart = await sCart.GetByUserName(Login);
+                if (cart == null)
                     return BadRequest();
 
-                return Ok(user);
+                return cart;
             }
             catch
             {
@@ -95,7 +121,7 @@ namespace ShopAPI2.Controllers
         /// <summary>
         /// Создать нового пользователя
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="model"></param>
         /// <response code="200">Пользователь создан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
@@ -103,25 +129,73 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserDTO>> Create([FromBody] UserDTO element)
+        public async override Task<ActionResult<UserDTO>> Create([FromBody] UserDTO model)
+        {
+            return await base.Create(model);
+        }
+
+        /// <summary>
+        /// Добавить товар в карзину по ID товара и пользователя
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpPost]
+        [Route("{ID:int}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> AddProduct(int ID, int IDProduct)
         {
             try
             {
-                UserDTO? user = await iUser.Create(element);
-
-                if (user == null)
+                CartDTO? cart = await sCart.Create(IDProduct, ID);
+                if (cart == null)
                     return BadRequest();
 
-                return Ok(user);
+                return null;
             }
-            catch(Exception e)
+            catch
             {
                 return StatusCode(500);
             }
         }
 
         /// <summary>
-        /// Удалить пользователя по ID
+        /// Добавить товар в карзину по ID товара и логину пользователя
+        /// </summary>
+        /// <param name="Login"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpPost]
+        [Route("{Login}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> AddProduct(string Login, int IDProduct)
+        {
+            try
+            {
+                int ID = GetRequereParam(Login).Id;
+
+                CartDTO? cart = await sCart.Create(IDProduct, ID);
+                if (cart == null)
+                    return BadRequest();
+
+                return null;
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Удалить пользователя по ID товара и пользователя
         /// </summary>
         /// <param name="ID"></param>
         /// <response code="200">Пользователь удален</response>
@@ -131,16 +205,64 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> Delete(int ID)
+        public async override Task<ActionResult> Delete(int ID)
+        {
+            return await base.Delete(ID);
+        }
+
+        /// <summary>
+        /// Удалить товар из карзины по ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpDelete]
+        [Route("{ID:int}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> DeleteProduct(int ID, int IDProduct)
         {
             try
             {
-                bool user = await iUser.Delete(ID);
-
-                if (user == false)
+                CartDTO? cart = await sCart.Delete(ID,IDProduct);
+                if (cart == null)
                     return BadRequest();
 
-                return Ok(user);
+                return Ok(cart);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Удалить товар из карзины по ID товара и логину пользователя
+        /// </summary>
+        /// <param name="Login"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpDelete]
+        [Route("{Login}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> DeleteProduct(string Login, int IDProduct)
+        {
+            try
+            {
+                int ID = GetRequereParam(Login).Id;
+
+                CartDTO? cart = await sCart.Delete(ID, IDProduct);
+                if (cart == null)
+                    return BadRequest();
+
+                return Ok(cart);
             }
             catch
             {
@@ -152,7 +274,7 @@ namespace ShopAPI2.Controllers
         /// Обновить существующего пользователя по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <param name="element"></param>
+        /// <param name="model"></param>
         /// <response code="200">Пользователь обновлен</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
@@ -160,21 +282,91 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserDTO>> Update(int ID, [FromBody] UserDTO element)
+        public async override Task<ActionResult<UserDTO>> Update(int ID, [FromBody] UserDTO model)
+        {
+            return await base.Update(ID, model);
+        }
+
+        /// <summary>
+        /// Обновать товар в карзине по ID товара и пользователя
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpPut]
+        [Route("{ID:int}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> UpdateCountProduct(int ID, int IDProduct, int Count)
         {
             try
             {
-                UserDTO? user = await iUser.Update(ID, element);
+                CartDTO? cart = await sCart.Update(ID, IDProduct, Count);
 
-                if (user == null)
+                if (cart == null)
                     return BadRequest();
 
-                return Ok(user);
+                return Ok(cart);
             }
             catch
             {
                 return StatusCode(500);
             }
+        }
+
+
+        /// <summary>
+        /// Обновать товар в карзине по ID товара и логину пользователя
+        /// </summary>
+        /// <param name="Login"></param>
+        /// <param name="IDProduct"></param>
+        /// <response code="200">Пользователь удален</response>
+        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        [HttpPut]
+        [Route("{Login}/Cart/{IDProduct:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CartDTO>> UpdateCountProduct(string Login, int IDProduct, int Count)
+        {
+            try
+            {
+                int ID = GetRequereParam(Login).Id;
+
+                CartDTO? cart = await sCart.Update(ID, IDProduct, Count);
+
+                if (cart == null)
+                    return BadRequest();
+
+                return Ok(cart);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        protected override bool IsValid(UserDTO model)
+        {
+            if(
+                String.IsNullOrWhiteSpace(model.Login) ||
+                String.IsNullOrWhiteSpace(model.Password) ||
+                String.IsNullOrWhiteSpace(model.SecondName) ||
+                String.IsNullOrWhiteSpace(model.FirstName) ||
+                String.IsNullOrWhiteSpace(model.MidleName) ||
+                String.IsNullOrWhiteSpace(model.Email) ||
+                String.IsNullOrWhiteSpace(model.Phone) ||
+                String.IsNullOrWhiteSpace(model.Role)
+                )
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

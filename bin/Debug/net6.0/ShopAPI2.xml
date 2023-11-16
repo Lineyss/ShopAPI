@@ -4,6 +4,111 @@
         <name>ShopAPI2</name>
     </assembly>
     <members>
+        <member name="M:ShopAPI2.Controllers.CategoryController.Get">
+            <summary>
+            Получить данные о всех категориях
+            </summary>
+            <response code="200">Возвращает массив категорий</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.CategoryController.GetID(System.Int32)">
+            <summary>
+            Получить категорию по ID
+            </summary>
+            <response code="200">Возвращает категорию</response>
+            <response code="400">Не верно переданны данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.CategoryController.GetRequereParam(System.String)">
+            <summary>
+            Создать новую категорию
+            </summary>
+            <param name="Title"></param>
+            <response code="200">Новая категория созданна</response>
+            <response code="400">Не верно переданны данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.CategoryController.Create(ShopAPI2.Models.DTO.CategoryDTO)">
+            <summary>
+            Создать новую категорию
+            </summary>
+            <param name="model"></param>
+            <response code="200">Новая категория созданна</response>
+            <response code="400">Не верно переданны данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.CategoryController.Delete(System.Int32)">
+            <summary>
+            Удалить категорию по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Категория удалена</response>
+            <response code="400">Не верно переданны данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.CategoryController.Update(System.Int32,ShopAPI2.Models.DTO.CategoryDTO)">
+            <summary>
+            Обновить существующую категорию по ID
+            </summary>
+            <param name="ID"></param>
+            <param name="model"></param>
+            <response code="200">Категория обновлена</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.Get">
+            <summary>
+            Получить данные о всех продуктах
+            </summary>
+            <response code="200">Продукты переданы</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.GetID(System.Int32)">
+            <summary>
+            Получить продукт по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Продукт передан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.GetRequereParam(System.String)">
+            <summary>
+            Получить продукт по названию
+            </summary>
+            <param name="Title"></param>
+            <response code="200">Продукт передан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.Create(ShopAPI2.Models.DTO.ProductDTO)">
+            <summary>
+            Создать новый продукт
+            </summary>
+            <param name="model"></param>
+            <response code="200">Новый продукт создан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.Delete(System.Int32)">
+            <summary>
+            Удалить продукт по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Продукт удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.ProductController.Update(System.Int32,ShopAPI2.Models.DTO.ProductDTO)">
+            <summary>
+            Обновить существующий продукт по ID
+            </summary>
+            <param name="ID"></param>
+            <param name="model"></param>
+            <response code="200">Продукт обновлен</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
         <member name="M:ShopAPI2.Controllers.RoleController.Get">
             <summary>
             Получить данные о всех ролях
@@ -20,12 +125,20 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:ShopAPI2.Controllers.RoleController.GetID(System.String)" -->
+        <member name="M:ShopAPI2.Controllers.RoleController.GetRequereParam(System.String)">
+            <summary>
+            Получить роль по названию
+            </summary>
+            <param name="Title"></param>
+            <response code="200">Возвращает элемент по ID</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
         <member name="M:ShopAPI2.Controllers.RoleController.Create(ShopAPI2.Models.DTO.RoleDTO)">
             <summary>
             Создать новую роли
             </summary>
-            <param name="element"></param>
+            <param name="model"></param>
             <response code="200">Новая роль создана</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -44,9 +157,16 @@
             Обновить существующую роль по ID
             </summary>
             <param name="ID"></param>
-            <param name="element"></param>
+            <param name="model"></param>
             <response code="200">Элемент удален из базы данных</response>
             <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserCartController.GetALL">
+            <summary>
+            Получить данные о всех карзинах
+            </summary>
+            <response code="200">Возвращает массив ролей</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
         <member name="M:ShopAPI2.Controllers.UserController.Get">
@@ -65,12 +185,30 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.UserController.GetLogin(System.String)">
+        <member name="M:ShopAPI2.Controllers.UserController.GetRequereParam(System.String)">
             <summary>
-            Получить пользователя по Логину
+            Получить пользователя по логину
             </summary>
             <param name="login"></param>
             <response code="200">Пользователь передан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.GetCart(System.Int32)">
+            <summary>
+            Получить карзину пользователя по ID
+            </summary>
+            <param name="ID"></param>
+            <response code="200">Пользователь создан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.GetCart(System.String)">
+            <summary>
+            Получить карзину пользователя по логину
+            </summary>
+            <param name="Login"></param>
+            <response code="200">Пользователь создан</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
@@ -78,16 +216,56 @@
             <summary>
             Создать нового пользователя
             </summary>
-            <param name="element"></param>
+            <param name="model"></param>
             <response code="200">Пользователь создан</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.AddProduct(System.Int32,System.Int32)">
+            <summary>
+            Добавить товар в карзину по ID товара и пользователя
+            </summary>
+            <param name="ID"></param>
+            <param name="IDProduct"></param>
+            <response code="200">Пользователь удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.AddProduct(System.String,System.Int32)">
+            <summary>
+            Добавить товар в карзину по ID товара и логину пользователя
+            </summary>
+            <param name="Login"></param>
+            <param name="IDProduct"></param>
+            <response code="200">Пользователь удален</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
         <member name="M:ShopAPI2.Controllers.UserController.Delete(System.Int32)">
             <summary>
-            Удалить пользователя по ID
+            Удалить пользователя по ID товара и пользователя
             </summary>
             <param name="ID"></param>
+            <response code="200">Пользователь удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.DeleteProduct(System.Int32,System.Int32)">
+            <summary>
+            Удалить товар из карзины по ID
+            </summary>
+            <param name="ID"></param>
+            <param name="IDProduct"></param>
+            <response code="200">Пользователь удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.DeleteProduct(System.String,System.Int32)">
+            <summary>
+            Удалить товар из карзины по ID товара и логину пользователя
+            </summary>
+            <param name="Login"></param>
+            <param name="IDProduct"></param>
             <response code="200">Пользователь удален</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -97,8 +275,28 @@
             Обновить существующего пользователя по ID
             </summary>
             <param name="ID"></param>
-            <param name="element"></param>
+            <param name="model"></param>
             <response code="200">Пользователь обновлен</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.UpdateCountProduct(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Обновать товар в карзине по ID товара и пользователя
+            </summary>
+            <param name="ID"></param>
+            <param name="IDProduct"></param>
+            <response code="200">Пользователь удален</response>
+            <response code="400">Не верно переданы данные</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
+        <member name="M:ShopAPI2.Controllers.UserController.UpdateCountProduct(System.String,System.Int32,System.Int32)">
+            <summary>
+            Обновать товар в карзине по ID товара и логину пользователя
+            </summary>
+            <param name="Login"></param>
+            <param name="IDProduct"></param>
+            <response code="200">Пользователь удален</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
@@ -112,6 +310,18 @@
             <inheritdoc />
         </member>
         <member name="M:ShopAPI2.Migrations.first.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ShopAPI2.Migrations.test">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.test.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.test.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShopAPI2.Migrations.test.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

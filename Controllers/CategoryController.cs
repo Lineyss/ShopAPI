@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShopAPI2.Controllers.Help;
 using ShopAPI2.Models.DTO;
 using ShopAPI2.Services.DTOServices.Help;
@@ -8,82 +7,83 @@ namespace ShopAPI2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RoleController : AController<RoleDTO>
+    public class CategoryController : AController<CategoryDTO>
     {
-        public RoleController(IDTOServices<RoleDTO> iRole) : base(iRole)
+        public CategoryController(IDTOServices<CategoryDTO> iCategory) : base(iCategory)
         {
-
         }
 
         /// <summary>
-        /// Получить данные о всех ролях
+        /// Получить данные о всех категориях
         /// </summary>
-        /// <response code="200">Возвращает массив ролей</response>
+        /// <response code="200">Возвращает массив категорий</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<IEnumerable<RoleDTO>>> Get()
+        public async override Task<ActionResult<IEnumerable<CategoryDTO>>> Get()
         {
             return await base.Get();
         }
 
         /// <summary>
-        /// Получить роль по ID
+        /// Получить категорию по ID
         /// </summary>
-        /// <param name="ID"></param>
-        /// <response code="200">Возвращает элемент по ID</response>
-        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="200">Возвращает категорию</response>
+        /// <response code="400">Не верно переданны данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpGet("{ID:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<RoleDTO>> GetID(int ID)
+        public async override Task<ActionResult<CategoryDTO>> GetID(int ID)
         {
             return await base.GetID(ID);
         }
 
         /// <summary>
-        /// Получить роль по названию
+        /// Создать новую категорию
         /// </summary>
         /// <param name="Title"></param>
-        /// <response code="200">Возвращает элемент по ID</response>
-        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="200">Новая категория созданна</response>
+        /// <response code="400">Не верно переданны данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpGet("{Title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<RoleDTO>> GetRequereParam(string Title)
+        public async override Task<ActionResult<CategoryDTO>> GetRequereParam(string Title)
         {
             return await base.GetRequereParam(Title);
         }
 
         /// <summary>
-        /// Создать новую роли
+        /// Создать новую категорию
         /// </summary>
         /// <param name="model"></param>
-        /// <response code="200">Новая роль создана</response>
-        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="200">Новая категория созданна</response>
+        /// <response code="400">Не верно переданны данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPost]
+        [Route("Create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<RoleDTO>> Create([FromBody] RoleDTO model)
+
+        public async override Task<ActionResult<CategoryDTO>> Create([FromBody] CategoryDTO model)
         {
             return await base.Create(model);
         }
 
         /// <summary>
-        /// Удалить роли по ID
+        /// Удалить категорию по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <response code="200">Элемент удален из базы данных</response>
-        /// <response code="400">Не верно переданы данные</response>
+        /// <response code="200">Категория удалена</response>
+        /// <response code="400">Не верно переданны данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
-        [HttpDelete("{ID}")]
+        [HttpDelete]
+        [Route("Delete/{ID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -93,23 +93,24 @@ namespace ShopAPI2.Controllers
         }
 
         /// <summary>
-        /// Обновить существующую роль по ID
+        /// Обновить существующую категорию по ID
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="model"></param>
-        /// <response code="200">Элемент удален из базы данных</response>
+        /// <response code="200">Категория обновлена</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
-        [HttpPut("{ID}")]
+        [HttpPut]
+        [Route("Update/{ID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<RoleDTO>> Update(int ID, [FromBody] RoleDTO model)
+        public async override Task<ActionResult<CategoryDTO>> Update(int ID, [FromBody] CategoryDTO model)
         {
             return await base.Update(ID, model);
         }
 
-        protected override bool IsValid(RoleDTO model)
+        protected override bool IsValid(CategoryDTO model)
         {
             if (String.IsNullOrWhiteSpace(model.Title))
                 return false;

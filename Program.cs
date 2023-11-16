@@ -7,6 +7,8 @@ using ShopAPI2.Models.Help;
 using ShopAPI2.Models.DTO;
 using ShopAPI2.Services.DTOServices.Help;
 using ShopAPI2.Services.DTOServices;
+using ShopAPI2.Controllers;
+using Microsoft.Extensions.FileProviders;
 
 namespace ShopAPI2
 {
@@ -60,6 +62,8 @@ namespace ShopAPI2
 
             builder.Services.AddScoped<IDTOServices<UserDTO>, UserDTOService>();
             builder.Services.AddScoped<IDTOServices<RoleDTO>, RoleDTOService>();
+            builder.Services.AddScoped<IDTOServices<CategoryDTO>, CategoryDTOService>();
+            builder.Services.AddScoped<IDTOServices<ProductDTO>, ProductDTOService>();
 
             var app = builder.Build();
 
@@ -71,6 +75,15 @@ namespace ShopAPI2
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(builder.Environment.ContentRootPath, "Images")),
+                RequestPath = "/StaticFiles"
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
