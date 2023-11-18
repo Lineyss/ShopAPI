@@ -23,13 +23,18 @@ namespace ShopAPI2.Models.DTO
 
         public ProductDTO(ProductPOSTDTO product)
         {
-            ID = product.ID;
+            ID = 0;
             Title = product.Title;
             ImagePath = product.Image.FileName;
             Description = product.Description;
             Price = product.Price;
             Count = product.Count;
-            Category = product.Category;
+            IDCategory = product.IDCategory;
+        }
+
+        public int GetIDCategory()
+        {
+            return IDCategory;
         }
 
         public int ID { get; private set; }
@@ -42,7 +47,21 @@ namespace ShopAPI2.Models.DTO
         [MaxLength(100)]
         public string Description { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        private decimal price;
+        public decimal Price
+        {
+            get
+            {
+                return price;
+            }
+            set
+            {
+                if (value < 0)
+                    value = 0;
+
+                price = value;
+            }
+        }
         private int count;
         [Required]
         public int Count
@@ -62,5 +81,7 @@ namespace ShopAPI2.Models.DTO
 
         [Required]
         public string Category { get; set; }
+
+        private int IDCategory { get; set; }
     }
 }

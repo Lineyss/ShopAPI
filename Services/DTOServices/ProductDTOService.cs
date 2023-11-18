@@ -13,9 +13,14 @@ namespace ShopAPI2.Services.DTOServices
             this.db = db;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAll()
+        public async Task<IEnumerable<ProductDTO>> GetAllIsExist()
         {
             return await db.products.Where(element=> element.IsExist).Include(element => element.Category).Select(element => new ProductDTO(element)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetAll()
+        {
+            return await db.products.Include(element => element.Category).Select(element => new ProductDTO(element)).ToListAsync();
         }
 
         public async Task<ProductDTO?> GetBy(int ID)
@@ -42,7 +47,7 @@ namespace ShopAPI2.Services.DTOServices
                 return null;
 
             Product? product = await db.products.FirstOrDefaultAsync(item => item.Title == element.Title);
-            Category? category = await db.category.FirstOrDefaultAsync(item => item.Title == element.Category);
+            Category? category = await db.category.FirstOrDefaultAsync(item => item.ID == element.GetIDCategory());
 
             if (product != null || category == null)
                 return null;
@@ -83,7 +88,7 @@ namespace ShopAPI2.Services.DTOServices
                 return null;
 
             Product? product = await db.products.FirstOrDefaultAsync(item => item.ID == ID);
-            Category? category = await db.category.FirstOrDefaultAsync(item => item.Title == element.Category);
+            Category? category = await db.category.FirstOrDefaultAsync(item => item.ID == element.GetIDCategory());
 
             if (product == null || category == null)
                 return null;

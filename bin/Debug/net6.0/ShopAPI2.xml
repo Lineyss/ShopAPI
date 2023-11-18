@@ -4,6 +4,13 @@
         <name>ShopAPI2</name>
     </assembly>
     <members>
+        <member name="M:ShopAPI2.Controllers.CartController.GetALL">
+            <summary>
+            Получить данные о всех карзинах
+            </summary>
+            <response code="200">Возвращает массив ролей</response>
+            <response code="500">Ошибка на стороне сервера</response>
+        </member>
         <member name="M:ShopAPI2.Controllers.CategoryController.Get">
             <summary>
             Получить данные о всех категориях
@@ -28,7 +35,7 @@
             <response code="400">Не верно переданны данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.CategoryController.Create(ShopAPI2.Models.DTO.CategoryDTO)">
+        <member name="M:ShopAPI2.Controllers.CategoryController.Create(System.String)">
             <summary>
             Создать новую категорию
             </summary>
@@ -46,12 +53,12 @@
             <response code="400">Не верно переданны данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.CategoryController.Update(System.Int32,ShopAPI2.Models.DTO.CategoryDTO)">
+        <member name="M:ShopAPI2.Controllers.CategoryController.Update(System.Int32,System.String)">
             <summary>
             Обновить существующую категорию по ID
             </summary>
             <param name="ID"></param>
-            <param name="model"></param>
+            <param name="Title"></param>
             <response code="200">Категория обновлена</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -81,11 +88,11 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.ProductController.Create(ShopAPI2.Models.DTO.ProductDTO)">
+        <member name="M:ShopAPI2.Controllers.ProductController.Create(ShopAPI2.Models.DTO.ProductPOSTDTO)">
             <summary>
             Создать новый продукт
             </summary>
-            <param name="model"></param>
+            <param name="Product"></param>
             <response code="200">Новый продукт создан</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -99,12 +106,12 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.ProductController.Update(System.Int32,ShopAPI2.Models.DTO.ProductDTO)">
+        <member name="M:ShopAPI2.Controllers.ProductController.Update(System.Int32,ShopAPI2.Models.DTO.ProductPOSTDTO)">
             <summary>
             Обновить существующий продукт по ID
             </summary>
             <param name="ID"></param>
-            <param name="model"></param>
+            <param name="Product"></param>
             <response code="200">Продукт обновлен</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -134,11 +141,11 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.RoleController.Create(ShopAPI2.Models.DTO.RoleDTO)">
+        <member name="M:ShopAPI2.Controllers.RoleController.Create(System.String)">
             <summary>
             Создать новую роли
             </summary>
-            <param name="model"></param>
+            <param name="Title"></param>
             <response code="200">Новая роль создана</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -152,21 +159,14 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.RoleController.Update(System.Int32,ShopAPI2.Models.DTO.RoleDTO)">
+        <member name="M:ShopAPI2.Controllers.RoleController.Update(System.Int32,System.String)">
             <summary>
             Обновить существующую роль по ID
             </summary>
             <param name="ID"></param>
-            <param name="model"></param>
+            <param name="Title"></param>
             <response code="200">Элемент удален из базы данных</response>
             <response code="400">Не верно переданы данные</response>
-            <response code="500">Ошибка на стороне сервера</response>
-        </member>
-        <member name="M:ShopAPI2.Controllers.UserCartController.GetALL">
-            <summary>
-            Получить данные о всех карзинах
-            </summary>
-            <response code="200">Возвращает массив ролей</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
         <member name="M:ShopAPI2.Controllers.UserController.Get">
@@ -212,11 +212,11 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.UserController.Create(ShopAPI2.Models.DTO.UserDTO)">
+        <member name="M:ShopAPI2.Controllers.UserController.Create(ShopAPI2.Models.DTO.UserPOSTDTO)">
             <summary>
             Создать нового пользователя
             </summary>
-            <param name="model"></param>
+            <param name="user"></param>
             <response code="200">Пользователь создан</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
@@ -270,12 +270,12 @@
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
-        <member name="M:ShopAPI2.Controllers.UserController.Update(System.Int32,ShopAPI2.Models.DTO.UserDTO)">
+        <member name="M:ShopAPI2.Controllers.UserController.Update(System.Int32,ShopAPI2.Models.DTO.UserPOSTDTO)">
             <summary>
             Обновить существующего пользователя по ID
             </summary>
             <param name="ID"></param>
-            <param name="model"></param>
+            <param name="user"></param>
             <response code="200">Пользователь обновлен</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>

@@ -10,8 +10,8 @@ namespace ShopAPI2.Controllers
     [Route("api/User")]
     public class UserController : AController<UserDTO>
     {
-        private readonly CartDTOServices sCart;
-        public UserController(IDTOServices<UserDTO> iUser, CartDTOServices sCart) : base(iUser)
+        private readonly ICartDOService sCart;
+        public UserController(IDTOServices<UserDTO> iUser, ICartDOService sCart) : base(iUser)
         {
             this.sCart = sCart;
         }
@@ -24,7 +24,7 @@ namespace ShopAPI2.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<IEnumerable<UserDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
         {
             return await base.Get();
         }
@@ -40,7 +40,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<UserDTO>> GetID(int ID)
+        public async Task<ActionResult<UserDTO>> GetID(int ID )
         {
             return await base.GetID(ID);
         }
@@ -57,7 +57,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<UserDTO>> GetRequereParam(string login)
+        public async Task<ActionResult<UserDTO>> GetRequereParam(string login )
         {
             return await base.GetRequereParam(login);
         }
@@ -74,7 +74,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<CartDTO>> GetCart(int ID)
+        public async Task<ActionResult<CartDTO>> GetCart(int ID )
         {
             try
             {
@@ -102,7 +102,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<CartDTO>> GetCart(string Login)
+        public async Task<ActionResult<CartDTO>> GetCart(string Login )
         {
             try
             {
@@ -121,7 +121,7 @@ namespace ShopAPI2.Controllers
         /// <summary>
         /// Создать нового пользователя
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="user"></param>
         /// <response code="200">Пользователь создан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
@@ -129,9 +129,9 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<UserDTO>> Create([FromBody] UserDTO model)
+        public async Task<ActionResult<UserDTO>> Create([FromForm] UserPOSTDTO user)
         {
-            return await base.Create(model);
+            return await base.Create(new UserDTO(user));
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<CartDTO>> AddProduct(int ID, int IDProduct)
+        public async Task<ActionResult<CartDTO>> AddProduct(int ID, int IDProduct )
         {
             try
             {
@@ -205,7 +205,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult> Delete(int ID)
+        public async Task<ActionResult> Delete(int ID )
         {
             return await base.Delete(ID);
         }
@@ -274,7 +274,7 @@ namespace ShopAPI2.Controllers
         /// Обновить существующего пользователя по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <param name="model"></param>
+        /// <param name="user"></param>
         /// <response code="200">Пользователь обновлен</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
@@ -282,9 +282,9 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<UserDTO>> Update(int ID, [FromBody] UserDTO model)
+        public async Task<ActionResult<UserDTO>> Update(int ID, [FromForm] UserPOSTDTO user )
         {
-            return await base.Update(ID, model);
+            return await base.Update(ID, new UserDTO(user));
         }
 
         /// <summary>

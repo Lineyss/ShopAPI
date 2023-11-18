@@ -24,6 +24,25 @@ namespace ShopAPI2.Models.DTO
             Email = user.Email;
             Role = user.Role.Title;
         }
+
+        public UserDTO(UserPOSTDTO user)
+        {
+            ID = 0;
+            Login = user.Login;
+            Password = user.Password;
+            SecondName = user.SecondName;
+            FirstName = user.FirstName;
+            MidleName = user.MidleName;
+            Phone = user.Phone;
+            Email = user.Email;
+            IDRole = user.IDRole;
+        }
+
+        public int GetRoleID()
+        {
+            return IDRole;
+        }
+
         public int ID { get; private set; }
 
         [Required]
@@ -50,5 +69,6 @@ namespace ShopAPI2.Models.DTO
         [Required]
         [MaxLength(20)]
         public string Role { get; set; }
+        private int IDRole { get; set; }
     }
 }

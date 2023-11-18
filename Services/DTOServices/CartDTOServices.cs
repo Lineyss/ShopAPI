@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ShopAPI2.Models.DataBaseModels;
 using ShopAPI2.Models.DTO;
 using ShopAPI2.Services.DTOServices.Help;
 
 namespace ShopAPI2.Services.DTOServices
 {
-    public class CartDTOServices
+    public class CartDTOServices : ICartDOService
     {
         private readonly DataBaseWorker db;
         private readonly List<CartDTO> cartList = new List<CartDTO>();
@@ -20,11 +19,11 @@ namespace ShopAPI2.Services.DTOServices
         {
             foreach(var user in db.users)
             {
-                var products = await db.cart
+                List<ProductDTO> products = db.cart
                     .Where(element => element.IDUser == user.ID)
                     .Include(element => element.Product)
                     .Select(element => new ProductDTO(element.Product))
-                    .ToListAsync();
+                    .ToList();
 
                 if(products != null || products.Count() == 0)
                 {

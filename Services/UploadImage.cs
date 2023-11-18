@@ -5,7 +5,7 @@ namespace ShopAPI2.Services
     public class UploadImage
     {
         private string PathToFile = null;
-        private string path = "~/StaticFiles/";
+        private string path = Directory.GetCurrentDirectory() + "/Images/";
         public async void Upload(IFormFile file)
         {
             if (file == null)

@@ -21,7 +21,7 @@ namespace ShopAPI2.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<IEnumerable<CategoryDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> Get()
         {
             return await base.Get();
         }
@@ -36,7 +36,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<CategoryDTO>> GetID(int ID)
+        public async Task<ActionResult<CategoryDTO>> GetID(int ID)
         {
             return await base.GetID(ID);
         }
@@ -52,7 +52,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<CategoryDTO>> GetRequereParam(string Title)
+        public async Task<ActionResult<CategoryDTO>> GetRequereParam(string Title)
         {
             return await base.GetRequereParam(Title);
         }
@@ -70,9 +70,9 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async override Task<ActionResult<CategoryDTO>> Create([FromBody] CategoryDTO model)
+        public async Task<ActionResult<CategoryDTO>> Create([FromForm] string Title)
         {
-            return await base.Create(model);
+            return await base.Create(new CategoryDTO(Title));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult> Delete(int ID)
+        public async Task<ActionResult> Delete(int ID )
         {
             return await base.Delete(ID);
         }
@@ -96,7 +96,7 @@ namespace ShopAPI2.Controllers
         /// Обновить существующую категорию по ID
         /// </summary>
         /// <param name="ID"></param>
-        /// <param name="model"></param>
+        /// <param name="Title"></param>
         /// <response code="200">Категория обновлена</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
@@ -105,9 +105,9 @@ namespace ShopAPI2.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async override Task<ActionResult<CategoryDTO>> Update(int ID, [FromBody] CategoryDTO model)
+        public async Task<ActionResult<CategoryDTO>> Update(int ID, [FromForm] string Title )
         {
-            return await base.Update(ID, model);
+            return await base.Update(ID, new CategoryDTO(Title));
         }
 
         protected override bool IsValid(CategoryDTO model)

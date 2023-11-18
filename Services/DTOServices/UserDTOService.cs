@@ -41,7 +41,7 @@ namespace ShopAPI2.Services.DTOServices
                 return null;
 
             User? user = await db.users.FirstOrDefaultAsync(item => item.Login == element.Login);
-            Role? role = await db.roles.FirstOrDefaultAsync(item => item.Title == element.Role);
+            Role? role = await db.roles.FirstOrDefaultAsync(item => item.ID == element.GetRoleID());
 
             if (user != null || role == null)
                 return null;

@@ -9,6 +9,7 @@ using ShopAPI2.Services.DTOServices.Help;
 using ShopAPI2.Services.DTOServices;
 using ShopAPI2.Controllers;
 using Microsoft.Extensions.FileProviders;
+using ShopAPI2.Controllers.Help;
 
 namespace ShopAPI2
 {
@@ -21,7 +22,15 @@ namespace ShopAPI2
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            WebApplication.CreateBuilder(new WebApplicationOptions
+            {
+                ApplicationName = typeof(Program).Assembly.FullName,
+                ContentRootPath = Path.GetFullPath(Directory.GetCurrentDirectory()),
+                WebRootPath = "Images",
+                Args = args
+            });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -29,6 +38,7 @@ namespace ShopAPI2
 
                 var xmlPath = Path.Combine(basePath, "ShopAPI2.xml");
                 options.IncludeXmlComments(xmlPath);
+
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "ShopAPI",
@@ -64,6 +74,7 @@ namespace ShopAPI2
             builder.Services.AddScoped<IDTOServices<RoleDTO>, RoleDTOService>();
             builder.Services.AddScoped<IDTOServices<CategoryDTO>, CategoryDTOService>();
             builder.Services.AddScoped<IDTOServices<ProductDTO>, ProductDTOService>();
+            builder.Services.AddScoped<ICartDOService, CartDTOServices>();
 
             var app = builder.Build();
 
@@ -72,18 +83,13 @@ namespace ShopAPI2
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
+
 
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                Path.Combine(builder.Environment.ContentRootPath, "Images")),
-                RequestPath = "/StaticFiles"
-            });
 
             app.UseAuthentication();
             app.UseAuthorization();

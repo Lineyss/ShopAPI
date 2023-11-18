@@ -22,11 +22,33 @@ namespace ShopAPI2.Models.DataBaseModels
         [Required]
         public decimal Price { get; set; }
 
+        private int count;
         [Required]
-        public int Count { get; set; }
+        public int Count
+        {
+            get
+            {
+                return count;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    value = 0;
+                    IsExist = false;
+                }
+                else
+                {
+                    IsExist = true;
+                }
+                    
+
+                count = value;
+            }
+        }
 
         [Required]
-        public bool IsExist { get; set; } = false;
+        public bool IsExist { get; set; }
 
         [Required]
         public int IDCategory { get; set; }

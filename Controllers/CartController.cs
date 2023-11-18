@@ -8,10 +8,10 @@ namespace ShopAPI2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserCartController : ControllerBase
+    public class CartController : ControllerBase
     {
-        private readonly CartDTOServices iService;
-        public UserCartController(CartDTOServices iService)
+        private readonly ICartDOService iService;
+        public CartController(ICartDOService iService)
         {
             this.iService = iService;
         }

@@ -4,7 +4,6 @@ namespace ShopAPI2.Models.DTO
 {
     public class ProductPOSTDTO
     {
-        public int ID { get; private set; }
         [Required]
         [MaxLength(20)]
         public string Title { get; set; }
@@ -21,6 +20,6 @@ namespace ShopAPI2.Models.DTO
         public int Count { get; set; }
 
         [Required]
-        public string Category { get; set; }
+        public int IDCategory { get; set; }
     }
 }

@@ -5,8 +5,9 @@ using System.Xml.Linq;
 
 namespace ShopAPI2.Controllers.Help
 {
-    public abstract class AController <T>: ControllerBase
-        where T: class
+
+    public abstract class AController<T> : ControllerBase
+        where T : class
     {
         private readonly IDTOServices<T> iService;
 
@@ -14,7 +15,9 @@ namespace ShopAPI2.Controllers.Help
         {
             this.iService = iService;
         }
-        public async virtual Task<ActionResult<IEnumerable<T>>> Get()
+
+        [NonAction]
+        protected async Task<ActionResult<IEnumerable<T>>> Get()
         {
             try
             {
@@ -25,7 +28,9 @@ namespace ShopAPI2.Controllers.Help
                 return StatusCode(500);
             }
         }
-        public async virtual Task<ActionResult<T>> GetID(int ID)
+
+        [NonAction]
+        protected async Task<ActionResult<T>> GetID(int ID)
         {
             try
             {
@@ -41,7 +46,8 @@ namespace ShopAPI2.Controllers.Help
             }
         }
 
-        public async virtual Task<ActionResult<T>> GetRequereParam(string Value)
+        [NonAction]
+        protected async Task<ActionResult<T>> GetRequereParam(string Value)
         {
             try
             {
@@ -56,12 +62,14 @@ namespace ShopAPI2.Controllers.Help
                 return StatusCode(500);
             }
         }
-        public async virtual Task<ActionResult<T>> Create([FromBody] T model)
+
+        [NonAction]
+        protected async Task<ActionResult<T>> Create([FromBody] T model)
         {
             try
             {
 
-                if (model == null || IsValid(model))
+                if (model == null || !IsValid(model))
                     return BadRequest();
 
                 T? role = await iService.Create(model);
@@ -77,7 +85,8 @@ namespace ShopAPI2.Controllers.Help
             }
         }
 
-        public async virtual Task<ActionResult> Delete(int ID)
+        [NonAction]
+        protected async Task<ActionResult> Delete(int ID)
         {
             try
             {
@@ -93,11 +102,13 @@ namespace ShopAPI2.Controllers.Help
                 return StatusCode(500);
             }
         }
-        public async virtual Task<ActionResult<T>> Update(int ID, [FromBody] T model)
+
+        [NonAction]
+        protected async Task<ActionResult<T>> Update(int ID, [FromBody] T model)
         {
             try
             {
-                if (IsValid(model))
+                if (!IsValid(model))
                     return BadRequest();
 
                 T? role = await iService.Update(ID, model);

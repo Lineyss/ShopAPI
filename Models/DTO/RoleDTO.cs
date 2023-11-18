@@ -16,6 +16,12 @@ namespace ShopAPI2.Models.DTO
             Title = role.Title;
         }
 
+        public RoleDTO(string Title)
+        {
+            ID = 0;
+            this.Title = Title;
+        }
+
         public int ID { get; private set; }
         [Required]
         [MaxLength(20)]

@@ -16,6 +16,12 @@ namespace ShopAPI2.Models.DTO
             Title = category.Title;
         }
 
+        public CategoryDTO(string Title)
+        {
+            ID = 0;
+            this.Title = Title;
+        }
+
         public int ID { get; private set; }
         [Required]
         [MaxLength(20)]
