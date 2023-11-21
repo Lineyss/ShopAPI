@@ -39,8 +39,8 @@
             <summary>
             Создать новую категорию
             </summary>
-            <param name="model"></param>
-            <response code="200">Новая категория созданна</response>
+            <param name="Title"></param>
+            <response code="201">Новая категория созданна</response>
             <response code="400">Не верно переданны данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
@@ -92,8 +92,8 @@
             <summary>
             Создать новый продукт
             </summary>
-            <param name="Product"></param>
-            <response code="200">Новый продукт создан</response>
+            <param name="ProductPOSTDTO"></param>
+            <response code="201">Новый продукт создан</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
@@ -146,7 +146,7 @@
             Создать новую роли
             </summary>
             <param name="Title"></param>
-            <response code="200">Новая роль создана</response>
+            <response code="201">Новая роль создана</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>
@@ -217,7 +217,7 @@
             Создать нового пользователя
             </summary>
             <param name="user"></param>
-            <response code="200">Пользователь создан</response>
+            <response code="201">Пользователь создан</response>
             <response code="400">Не верно переданы данные</response>
             <response code="500">Ошибка на стороне сервера</response>
         </member>

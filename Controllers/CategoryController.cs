@@ -60,13 +60,13 @@ namespace ShopAPI2.Controllers
         /// <summary>
         /// Создать новую категорию
         /// </summary>
-        /// <param name="model"></param>
-        /// <response code="200">Новая категория созданна</response>
+        /// <param name="Title"></param>
+        /// <response code="201">Новая категория созданна</response>
         /// <response code="400">Не верно переданны данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPost]
         [Route("Create")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 

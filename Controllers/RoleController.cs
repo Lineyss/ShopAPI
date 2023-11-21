@@ -64,11 +64,11 @@ namespace ShopAPI2.Controllers
         /// Создать новую роли
         /// </summary>
         /// <param name="Title"></param>
-        /// <response code="200">Новая роль создана</response>
+        /// <response code="201">Новая роль создана</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<RoleDTO>> Create([FromForm] string Title)

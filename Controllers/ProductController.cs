@@ -62,12 +62,12 @@ namespace ShopAPI2.Controllers
         /// <summary>
         /// Создать новый продукт
         /// </summary>
-        /// <param name="Product"></param>
-        /// <response code="200">Новый продукт создан</response>
+        /// <param name="ProductPOSTDTO"></param>
+        /// <response code="201">Новый продукт создан</response>
         /// <response code="400">Не верно переданы данные</response>
         /// <response code="500">Ошибка на стороне сервера</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ProductDTO>> Create([FromForm] ProductPOSTDTO ProductPOSTDTO) 

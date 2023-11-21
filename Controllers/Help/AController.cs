@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.DataProtection.XmlEncryption;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using ShopAPI2.Models.DTO;
 using ShopAPI2.Services.DTOServices.Help;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace ShopAPI2.Controllers.Help
@@ -72,12 +75,12 @@ namespace ShopAPI2.Controllers.Help
                 if (model == null || !IsValid(model))
                     return BadRequest();
 
-                T? role = await iService.Create(model);
-
-                if (role == null)
+                model = await iService.Create(model);
+                
+                if (model == null)
                     return BadRequest();
 
-                return Ok(role);
+                return Created(HttpContext.Request.GetDisplayUrl() + $"/{GetValueParam<int>(model, "ID")}", model);
             }
             catch
             {
@@ -125,5 +128,19 @@ namespace ShopAPI2.Controllers.Help
         }
 
         protected abstract bool IsValid(T model);
+
+        private value GetValueParam<value>(T model, string paramName)
+        {
+            var param = model.GetType().GetMember(paramName)[0];
+
+            switch (param.MemberType)
+            {
+                case MemberTypes.Property:
+                    // Получение значения
+                    return (value)((PropertyInfo)param).GetValue(model);
+            }
+
+            throw new Exception();
+        }
     }
 }
